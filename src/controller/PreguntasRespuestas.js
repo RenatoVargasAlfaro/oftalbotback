@@ -170,10 +170,11 @@ module.exports = {
         console.log("Dato actualizado");*/
         await db.collection('PregRpta').updateOne({
             id: parseInt(dato) //como ya no es un id de mongo, se pasa asi como numero
-        }, nuevoDato, (err, result) => {
+        }, nuevoDato, async (err, result) => {
             if (err) throw err;
             console.log("Dato actualizado");
-            res.json("Actualizado");
+            const actualizado = await db.collection('PregRpta').find({id: parseInt(dato)}).toArray();
+            res.json(actualizado);
         });
     },
     getQuestionbyId: async (req, res) => {
